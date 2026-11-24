@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Одно слово — разные смыслы: роль пунктуации</title>
+<title>Одно сообщение — разные смыслы</title>
 <style>
   * {
     margin: 0;
@@ -13,15 +13,15 @@
 
   body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-    background: #f3f5f9;
+    background: #f1f5f9;
     color: #1e293b;
     line-height: 1.6;
   }
 
   header {
-    background: linear-gradient(135deg, #1e293b, #3b82f6);
+    background: linear-gradient(135deg, #1e1b4b, #4338ca);
     color: white;
-    padding: 45px 20px;
+    padding: 40px 20px 55px;
     text-align: center;
   }
 
@@ -34,143 +34,133 @@
     max-width: 680px;
     margin: 0 auto;
     font-size: 16px;
-    opacity: 0.92;
+    opacity: 0.9;
   }
 
   .container {
     max-width: 920px;
-    margin: -25px auto 40px;
+    margin: -30px auto 40px;
     padding: 0 16px;
   }
 
   .card {
     background: white;
-    border-radius: 16px;
+    border-radius: 18px;
     padding: 24px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
-    margin-bottom: 24px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+    margin-bottom: 22px;
   }
 
   .section-title {
     font-size: 17px;
     font-weight: 700;
     margin-bottom: 12px;
-    color: #1e293b;
+    color: #1e1b4b;
   }
 
-  .word-row {
+  .input-box {
     display: flex;
     gap: 10px;
     flex-wrap: wrap;
-    margin-bottom: 18px;
+    margin-bottom: 16px;
   }
 
   input[type="text"] {
     flex: 1;
-    min-width: 200px;
-    padding: 12px 16px;
+    min-width: 220px;
+    padding: 14px 18px;
     border: 2px solid #cbd5e1;
-    border-radius: 12px;
-    font-size: 17px;
+    border-radius: 14px;
+    font-size: 18px;
     font-weight: 600;
     outline: none;
+    transition: border-color 0.2s;
   }
 
   input[type="text"]:focus {
-    border-color: #3b82f6;
+    border-color: #4338ca;
   }
 
-  .quick-words {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    margin-bottom: 20px;
-  }
-
-  .word-pill {
-    background: #f1f5f9;
-    border: 1px solid #cbd5e1;
-    padding: 6px 14px;
-    border-radius: 20px;
-    font-size: 14px;
+  .btn-main {
+    background: #4338ca;
+    color: white;
+    border: none;
+    padding: 14px 26px;
+    border-radius: 14px;
+    font-size: 16px;
+    font-weight: 600;
     cursor: pointer;
     transition: 0.2s;
   }
 
-  .word-pill:hover {
-    background: #e2e8f0;
+  .btn-main:hover {
+    background: #312e81;
   }
 
-  .punct-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-    gap: 10px;
+  .chips-label {
+    font-size: 13px;
+    color: #64748b;
+    margin-bottom: 8px;
   }
 
-  .punct-btn {
-    background: #eff6ff;
-    color: #1d4ed8;
-    border: 2px solid #bfdbfe;
-    padding: 12px 10px;
-    border-radius: 12px;
-    font-size: 15px;
-    font-weight: 600;
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .chip {
+    background: #eef2ff;
+    color: #3730a3;
+    border: 1px solid #c7d2fe;
+    padding: 7px 14px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 500;
     cursor: pointer;
-    transition: all 0.2s;
-    text-align: center;
+    transition: 0.2s;
   }
 
-  .punct-btn span {
-    display: block;
-    font-size: 12px;
-    font-weight: 400;
-    color: #475569;
-    margin-top: 3px;
-  }
-
-  .punct-btn:hover, .punct-btn.active {
-    background: #2563eb;
+  .chip:hover {
+    background: #4338ca;
     color: white;
-    border-color: #2563eb;
   }
 
-  .punct-btn:hover span, .punct-btn.active span {
-    color: #dbeafe;
-  }
-
-  .message-bubble-wrap {
+  .chat-preview {
     background: #f8fafc;
     border: 1px solid #e2e8f0;
     border-radius: 14px;
     padding: 18px;
+    margin-bottom: 20px;
     text-align: center;
-    margin-bottom: 22px;
   }
 
-  .bubble-label {
-    font-size: 13px;
-    color: #64748b;
-    margin-bottom: 6px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
-
-  .message-bubble {
+  .bubble {
     display: inline-block;
-    background: #2563eb;
+    background: #4338ca;
     color: white;
-    font-size: 24px;
+    font-size: 22px;
     font-weight: 700;
     padding: 10px 24px;
     border-radius: 20px 20px 4px 20px;
-    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+    margin-bottom: 10px;
+    word-break: break-word;
   }
 
-  .punct-badge {
-    margin-top: 10px;
-    font-size: 14px;
+  .detected-features {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px;
+  }
+
+  .feature-pill {
+    background: #e2e8f0;
     color: #334155;
+    font-size: 12px;
     font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 12px;
   }
 
   .comparison {
@@ -195,13 +185,13 @@
     border-top: 5px solid #c026d3;
   }
 
-  .role-header {
+  .role-title {
     font-size: 18px;
     font-weight: 700;
     margin-bottom: 8px;
   }
 
-  .tag {
+  .badge {
     display: inline-block;
     padding: 4px 10px;
     border-radius: 6px;
@@ -210,32 +200,14 @@
     margin-bottom: 10px;
   }
 
-  .tag-adult {
+  .badge-adult {
     background: #bae6fd;
     color: #0369a1;
   }
 
-  .tag-teen {
+  .badge-teen {
     background: #f5d0fe;
     color: #86198f;
-  }
-
-  .guide-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 10px;
-    font-size: 14px;
-  }
-
-  .guide-table th, .guide-table td {
-    padding: 12px;
-    border-bottom: 1px solid #e2e8f0;
-    text-align: left;
-  }
-
-  .guide-table th {
-    background: #f8fafc;
-    color: #334155;
   }
 
   footer {
@@ -249,146 +221,164 @@
 <body>
 
 <header>
-  <h1>Одно слово — разные смыслы</h1>
-  <p>Интерактивный тренажёр о том, как знаки препинания, точки, скобки и регистр букв меняют эмоцию сообщения для взрослых и подростков.</p>
+  <h1>Одно сообщение — разные смыслы</h1>
+  <p>Напишите любое слово или фразу так, как вы обычно пишете в чате (с точкой, растянутыми буквами, сокращениями или смайлами), и узнайте реакцию разных поколений.</p>
 </header>
 
 <div class="container">
   <div class="card">
-    <div class="section-title">Шаг 1. Введите любое слово или выберите пример:</div>
-    <div class="word-row">
-      <input type="text" id="baseWord" value="Понятно" oninput="updateView()" placeholder="Введите слово, например: Понятно">
-    </div>
-    <div class="quick-words">
-      <button class="word-pill" onclick="setWord('Понятно')">Понятно</button>
-      <button class="word-pill" onclick="setWord('Хорошо')">Хорошо</button>
-      <button class="word-pill" onclick="setWord('Ладно')">Ладно</button>
-      <button class="word-pill" onclick="setWord('Спасибо')">Спасибо</button>
-      <button class="word-pill" onclick="setWord('Нормально')">Нормально</button>
-      <button class="word-pill" onclick="setWord('Ок')">Ок</button>
+    <div class="section-title">Введите любое слово или фразу:</div>
+    <div class="input-box">
+      <input type="text" id="msgInput" value="Чтооооо" oninput="analyzeText()" placeholder="Например: Чтооооо, поч, Понятно., норм))">
+      <button class="btn-main" onclick="analyzeText()">Разобрать</button>
     </div>
 
-    <div class="section-title">Шаг 2. Выберите оформление и пунктуацию:</div>
-    <div class="punct-grid" id="punctButtons"></div>
+    <div class="chips-label">Или нажмите на любой пример для проверки:</div>
+    <div class="chips" id="presetChips"></div>
   </div>
 
   <div class="card">
-    <div class="message-bubble-wrap">
-      <div class="bubble-label">Как выглядит сообщение в чате:</div>
-      <div class="message-bubble" id="renderedMessage">Понятно.</div>
-      <div class="punct-badge" id="punctRuleTitle">Оформление: Заглавная буква + точка в конце</div>
+    <div class="chat-preview">
+      <div class="bubble" id="bubbleText">Чтооооо</div>
+      <div class="detected-features" id="featuresList"></div>
     </div>
 
     <div class="comparison">
       <div class="role-box role-adult">
-        <div class="role-header">🧑‍💼 Восприятие взрослых</div>
-        <div class="tag tag-adult" id="adultTag">Нейтрально / Вежливо</div>
-        <p id="adultDesc"></p>
+        <div class="role-title">🧑‍💼 Как реагируют взрослые</div>
+        <div class="badge badge-adult" id="adultBadge">Непонимание / Опечатка</div>
+        <p id="adultResult"></p>
       </div>
 
       <div class="role-box role-teen">
-        <div class="role-header">🎧 Восприятие подростков</div>
-        <div class="tag tag-teen" id="teenTag">Холод / Обида / Агрессия</div>
-        <p id="teenDesc"></p>
+        <div class="role-title">🎧 Как реагируют подростки</div>
+        <div class="badge badge-teen" id="teenBadge">Шок / Сильное удивление</div>
+        <p id="teenResult"></p>
       </div>
     </div>
-  </div>
-
-  <div class="card">
-    <div class="section-title">Памятка: как работает цифровая пунктуация</div>
-    <table class="guide-table">
-      <thead>
-        <tr>
-          <th>Знак / Приём</th>
-          <th>Для взрослых</th>
-          <th>Для подростков</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><strong>Точка (.)</strong></td>
-          <td>Нормальное завершение мысли по правилам грамматики.</td>
-          <td>Сигнал раздражения, строгости, закрытия темы («разговор окончен»).</td>
-        </tr>
-        <tr>
-          <td><strong>Без знаков (слово)</strong></td>
-          <td>Небрежность или спешка при наборе текста.</td>
-          <td>Самый спокойный, нейтральный и дружелюбный тон.</td>
-        </tr>
-        <tr>
-          <td><strong>Многоточие (...)</strong></td>
-          <td>Задумчивость, пауза, незавершённая мысль.</td>
-          <td>Пассивная обида, драматизация, тяжёлый вздох или намёк.</td>
-        </tr>
-        <tr>
-          <td><strong>Скобки ))</strong></td>
-          <td>Непонятные лишние символы или опечатка.</td>
-          <td>Замена улыбки, тёплый и мягкий тон, снятие напряжения.</td>
-        </tr>
-        <tr>
-          <td><strong>КАПС (СЛОВО)</strong></td>
-          <td>Крик, грубость, повышение голоса.</td>
-          <td>Сильный восторг, шок, смех или бурная эмоция.</td>
-        </tr>
-      </tbody>
-    </table>
   </div>
 </div>
 
 <footer>
-  Образовательный проект: влияние пунктуации и графического оформления на восприятие эмоций
+  Образовательный проект о цифровой лингвистике, сленге и интернет-пунктуации
 </footer>
 
 <script>
-  const styles = [
-    {
-      id: "dot",
-      label: "С точкой (.)",
-      hint: "Классика",
-      format: (w) => capitalize(w) + ".",
-      rule: "Заглавная буква + точка в конце",
-      adultTag: "Грамотно / Спокойно",
-      adult: "Обычный вежливый ответ. Точка ставится автоматически или по правилам русского языка и просто показывает, что фраза закончена.",
-      teenTag: "Холод / Пассивная агрессия",
-      teen: "Точка в конце короткого слова воспринимается как резкость, обида или раздражение. Ощущается как «всё, отстань, я злюсь»."
-    },
-    {
-      id: "none",
-      label: "Без знаков",
-      hint: "С маленькой буквы",
-      format: (w) => w.toLowerCase(),
-      rule: "Строчная буква + отсутствие точки",
-      adultTag: "Немного небрежно",
-      adult: "Кажется, что собеседник торопится или ленится соблюдать правила оформления предложения.",
-      teenTag: "Спокойно / Дружелюбно",
-      teen: "Базовый нейтральный тон в мессенджерах. Отсутствие точки убирает строгость и показывает, что всё в порядке."
-    },
-    {
-      id: "dots",
-      label: "Многоточие (...)",
-      hint: "Три точки",
-      format: (w) => w.toLowerCase() + "...",
-      rule: "Многоточие в конце слова",
-      adultTag: "Раздумье / Пауза",
-      adult: "Воспринимается как неуверенность, задумчивость или лёгкая усталость, но без скрытого конфликта.",
-      teenTag: "Обида / Драма / Упрёк",
-      teen: "Читается как тяжёлый вздох, разочарование или скрытая претензия («ну-ну, я запомнил»)."
-    },
-    {
-      id: "excl",
-      label: "Восклицание (!)",
-      hint: "Один знак",
-      format: (w) => capitalize(w) + "!",
-      rule: "Восклицательный знак в конце",
-      adultTag: "Бодро / Приветливо",
-      adult: "Показывает энергичное согласие, радость или готовность действовать.",
-      teenTag: "Слишком громко / Напряжённо",
-      teen: "В обычной переписке одиночный восклицательный знак может показаться чрезмерно официальным или даже резким."
-    },
-    {
-      id: "brackets",
-      label: "Со скобками ))",
-      hint: "Улыбка",
-      format: (w) => w.toLowerCase() + "))",
-      rule: "Смайл-скобки без двоеточия",
+  const examples = [
+    "Чтооооо", "поч", "Понятно.", "понятно", "ок.", "пон", "хз",
+    "ладно...", "норм))", "ЧТО?!", "ахахаха", "спс", "ясно.", "неа", "жиза"
+  ];
 
+  const dictionary = {
+    "поч": {
+      feature: "Сокращение («почему»)",
+      adultTag: "Непонятное слово / Ошибка",
+      adult: "Взрослый может подумать, что вы недописали слово «почта», «почва» или случайно нажали кнопку отправки раньше времени.",
+      teenTag: "Быстрый вопрос «почему?»",
+      teen: "Привычное сокращение для экономии времени в быстрой переписке. Звучит легко, по-дружески и без лишнего напряжения."
+    },
+    "пон": {
+      feature: "Сокращение («понятно»)",
+      adultTag: "Небрежность / Неуважение",
+      adult: "Обрывок слова может показаться грубым или ленивым ответом («человеку даже лень дописать слово до конца»).",
+      teenTag: "Нейтрально или лёгкий сарказм",
+      teen: "В обычном чате значит «принято». Но если ответить так на длинную историю друга, это читается как «мне всё равно»."
+    },
+    "хз": {
+      feature: "Сленг («не знаю»)",
+      adultTag: "Грубость / Неприличное сокращение",
+      adult: "Люди старшего поколения часто воспринимают эту аббревиатуру как грубое выражение и неуважение к собеседнику.",
+      teenTag: "Обычное «не знаю»",
+      teen: "Максимально нейтральный и привычный способ сказать «без понятия», без какой-либо грубости."
+    },
+    "спс": {
+      feature: "Сокращение («спасибо»)",
+      adultTag: "Неискренняя благодарность",
+      adult: "Кажется, что человеку жалко потратить секунду на полное слово «спасибо» — выглядит сухо.",
+      teenTag: "Быстрая благодарность",
+      teen: "Нормальная дружеская благодарность за мелкую помощь в чате."
+    },
+    "жиза": {
+      feature: "Сленг («жизненно»)",
+      adultTag: "Незнакомое слово",
+      adult: "Взрослый человек без контекста может вообще не понять значение этого слова и переспросить, что оно означает.",
+      teenTag: "Полное согласие и поддержка",
+      teen: "Значит «у меня точно так же, очень тебя понимаю!». Сразу сближает собеседников."
+    },
+    "ок": {
+      feature: "Краткое согласие",
+      adultTag: "Деловое «хорошо»",
+      adult: "Воспринимается как чёткое и быстрое подтверждение договорённости.",
+      teenTag: "Сухое согласие",
+      teen: "Без смайлов или скобок звучит немного прохладно, но допустимо в быстрой переписке."
+    },
+    "ясно": {
+      feature: "Односложный ответ",
+      adultTag: "Всё понятно",
+      adult: "Означает, что объяснение принято и вопросов больше нет.",
+      teenTag: "Скрытое недовольство / Скука",
+      teen: "Часто воспринимается как сигнал, что собеседнику неинтересно, он обиделся или не верит вашим словам."
+    }
+  };
+
+  const chipsWrap = document.getElementById("presetChips");
+  examples.forEach(word => {
+    const btn = document.createElement("button");
+    btn.className = "chip";
+    btn.textContent = word;
+    btn.onclick = () => {
+      document.getElementById("msgInput").value = word;
+      analyzeText();
+    };
+    chipsWrap.appendChild(btn);
+  });
+
+  function analyzeText() {
+    const raw = document.getElementById("msgInput").value;
+    const text = raw.trim();
+    const bubble = document.getElementById("bubbleText");
+    const featuresBox = document.getElementById("featuresList");
+
+    if (!text) {
+      bubble.textContent = "...";
+      featuresBox.innerHTML = "";
+      document.getElementById("adultBadge").textContent = "Ожидание ввода";
+      document.getElementById("adultResult").textContent = "Введите любое слово сверху, чтобы увидеть разбор.";
+      document.getElementById("teenBadge").textContent = "Ожидание ввода";
+      document.getElementById("teenResult").textContent = "Введите любое слово сверху, чтобы увидеть разбор.";
+      return;
+    }
+
+    bubble.textContent = text;
+    const cleanLower = text.toLowerCase().replace(/[.!?,)()/]+$/g, "");
+    const features = [];
+
+    const hasStretched = /([а-яёa-z])\1{2,}/i.test(text);
+    const hasDotEnd = text.endsWith(".") && !text.endsWith("..");
+    const hasDots = text.endsWith("..");
+    const hasBrackets = /\)+$/.test(text);
+    const hasSadBrackets = /\(+$/.test(text);
+    const hasCaps = text === text.toUpperCase() && /[А-ЯЁA-Z]/.test(text) && text.length > 1;
+    const hasExcl = text.includes("!");
+    const hasQues = text.includes("?");
+    const isShortNoPunct = text === text.toLowerCase() && !/[.!?,)]$/.test(text);
+
+    if (hasStretched) features.push("Растянутые буквы (интонация)");
+    if (hasDotEnd) features.push("Точка в конце");
+    if (hasDots) features.push("Многоточие");
+    if (hasBrackets) features.push("Улыбка-скобки ))");
+   teenText = "Передаёт бурную реакцию на неожиданную новость («как так вышло?!»).";
+} else if (isShortNoPunct) {
+adultTag = "Немного небрежно";
+adultText = "Отсутствие заглавной буквы и точки может показаться спешкой или неаккуратностью.";
+teenTag = "Спокойно и по-дружески";
+teenText = "Самый комфортный и расслабленный тон в мессенджерах: без претензий и лишнего официоза.";
+}
+if (features.length === 0) features.push("Стандартное оформление");
+featuresBox.innerHTML = features.map(f => <span class="feature-pill">${f}</span>).join("");
+document.getElementById("adultBadge").textContent = adultTag;
+document.getElementById("adultResult").textContent = adultText;
+document.getElementById("teenBadge").textContent = teenTag;
+document.getElementById("teenResult").textContent = teenText;
+}
+analyzeText();
