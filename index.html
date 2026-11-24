@@ -1,320 +1,394 @@
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>One Message — Several Meanings</title>
-
+<title>Одно слово — разные смыслы: роль пунктуации</title>
 <style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
 
-html { scroll-behavior: smooth; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    background: #f3f5f9;
+    color: #1e293b;
+    line-height: 1.6;
+  }
 
-body {
-  font-family: Arial, sans-serif;
-  background: #f8f6f3;
-  color: #292638;
-  line-height: 1.7;
-}
+  header {
+    background: linear-gradient(135deg, #1e293b, #3b82f6);
+    color: white;
+    padding: 45px 20px;
+    text-align: center;
+  }
 
-header {
-  background: #292638;
-  color: white;
-  padding: 20px 8%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 15px;
-}
+  header h1 {
+    font-size: clamp(24px, 5vw, 36px);
+    margin-bottom: 10px;
+  }
 
-.logo {
-  font-size: 20px;
-  font-weight: bold;
-  letter-spacing: 2px;
-}
+  header p {
+    max-width: 680px;
+    margin: 0 auto;
+    font-size: 16px;
+    opacity: 0.92;
+  }
 
-nav a {
-  color: white;
-  text-decoration: none;
-  margin-left: 18px;
-  font-size: 14px;
-}
+  .container {
+    max-width: 920px;
+    margin: -25px auto 40px;
+    padding: 0 16px;
+  }
 
-nav a:hover { color: #e5c9dc; }
+  .card {
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+    margin-bottom: 24px;
+  }
 
-.hero {
-  padding: 100px 10%;
-  text-align: center;
-  background: linear-gradient(135deg, #e9dff0, #f5e6df);
-}
+  .section-title {
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: #1e293b;
+  }
 
-.hero h1 {
-  font-size: clamp(34px, 7vw, 58px);
-  line-height: 1.2;
-  margin-bottom: 25px;
-}
+  .word-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 18px;
+  }
 
-.hero p {
-  max-width: 720px;
-  margin: auto;
-  font-size: 18px;
-}
+  input[type="text"] {
+    flex: 1;
+    min-width: 200px;
+    padding: 12px 16px;
+    border: 2px solid #cbd5e1;
+    border-radius: 12px;
+    font-size: 17px;
+    font-weight: 600;
+    outline: none;
+  }
 
-.btn {
-  display: inline-block;
-  margin-top: 30px;
-  padding: 13px 28px;
-  background: #625078;
-  color: white;
-  text-decoration: none;
-  border-radius: 30px;
-  border: none;
-  cursor: pointer;
-}
+  input[type="text"]:focus {
+    border-color: #3b82f6;
+  }
 
-section {
-  padding: 70px 10%;
-}
+  .quick-words {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
 
-h2 {
-  font-size: 30px;
-  margin-bottom: 20px;
-}
+  .word-pill {
+    background: #f1f5f9;
+    border: 1px solid #cbd5e1;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: 0.2s;
+  }
 
-.description {
-  max-width: 850px;
-}
+  .word-pill:hover {
+    background: #e2e8f0;
+  }
 
-.cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 20px;
-  margin-top: 30px;
-}
+  .punct-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 10px;
+  }
 
-.card {
-  background: white;
-  padding: 25px;
-  border-radius: 18px;
-  box-shadow: 0 5px 20px #29263812;
-}
+  .punct-btn {
+    background: #eff6ff;
+    color: #1d4ed8;
+    border: 2px solid #bfdbfe;
+    padding: 12px 10px;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+  }
 
-.card h3 {
-  color: #625078;
-  margin-bottom: 12px;
-}
+  .punct-btn span {
+    display: block;
+    font-size: 12px;
+    font-weight: 400;
+    color: #475569;
+    margin-top: 3px;
+  }
 
-.experiment {
-  background: #eee8f3;
-  border-radius: 20px;
-  padding: 35px 20px;
-  text-align: center;
-  margin-top: 25px;
-}
+  .punct-btn:hover, .punct-btn.active {
+    background: #2563eb;
+    color: white;
+    border-color: #2563eb;
+  }
 
-.message {
-  font-size: 34px;
-  font-weight: bold;
-  margin: 25px 0;
-}
+  .punct-btn:hover span, .punct-btn.active span {
+    color: #dbeafe;
+  }
 
-button {
-  padding: 12px 18px;
-  margin: 6px;
-  border: none;
-  border-radius: 25px;
-  background: #625078;
-  color: white;
-  cursor: pointer;
-  font-size: 14px;
-}
+  .message-bubble-wrap {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 18px;
+    text-align: center;
+    margin-bottom: 22px;
+  }
 
-button:hover, .btn:hover {
-  background: #463956;
-}
+  .bubble-label {
+    font-size: 13px;
+    color: #64748b;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
 
-#result {
-  margin-top: 20px;
-  font-weight: bold;
-  min-height: 55px;
-}
+  .message-bubble {
+    display: inline-block;
+    background: #2563eb;
+    color: white;
+    font-size: 24px;
+    font-weight: 700;
+    padding: 10px 24px;
+    border-radius: 20px 20px 4px 20px;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+  }
 
-.note {
-  color: #6e6877;
-  font-size: 14px;
-  margin-top: 12px;
-}
+  .punct-badge {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #334155;
+    font-weight: 600;
+  }
 
-footer {
-  background: #292638;
-  color: white;
-  text-align: center;
-  padding: 35px 15px;
-}
+  .comparison {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+  }
 
-@media(max-width: 600px) {
-  header { justify-content: center; }
-  nav { text-align: center; }
-  nav a { margin: 5px; display: inline-block; }
-  section { padding: 50px 7%; }
-  .hero { padding: 75px 7%; }
-}
+  .role-box {
+    border-radius: 14px;
+    padding: 20px;
+    border: 1px solid #e2e8f0;
+  }
+
+  .role-adult {
+    background: #f0f9ff;
+    border-top: 5px solid #0284c7;
+  }
+
+  .role-teen {
+    background: #fdf4ff;
+    border-top: 5px solid #c026d3;
+  }
+
+  .role-header {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .tag {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+
+  .tag-adult {
+    background: #bae6fd;
+    color: #0369a1;
+  }
+
+  .tag-teen {
+    background: #f5d0fe;
+    color: #86198f;
+  }
+
+  .guide-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    font-size: 14px;
+  }
+
+  .guide-table th, .guide-table td {
+    padding: 12px;
+    border-bottom: 1px solid #e2e8f0;
+    text-align: left;
+  }
+
+  .guide-table th {
+    background: #f8fafc;
+    color: #334155;
+  }
+
+  footer {
+    text-align: center;
+    padding: 20px;
+    color: #64748b;
+    font-size: 14px;
+  }
 </style>
 </head>
-
 <body>
 
 <header>
-  <div class="logo">ONE MESSAGE.</div>
-  <nav>
-    <a href="#about">О проекте</a>
-    <a href="#research">Исследование</a>
-    <a href="#experiment">Эксперимент</a>
-  </nav>
+  <h1>Одно слово — разные смыслы</h1>
+  <p>Интерактивный тренажёр о том, как знаки препинания, точки, скобки и регистр букв меняют эмоцию сообщения для взрослых и подростков.</p>
 </header>
 
-<div class="hero">
-  <h1>Одно сообщение — несколько смыслов</h1>
-  <p>
-    Как пунктуация и графическое оформление влияют
-    на восприятие эмоций в русской интернет-коммуникации?
-  </p>
-  <a href="#experiment" class="btn">Попробовать эксперимент</a>
+<div class="container">
+  <div class="card">
+    <div class="section-title">Шаг 1. Введите любое слово или выберите пример:</div>
+    <div class="word-row">
+      <input type="text" id="baseWord" value="Понятно" oninput="updateView()" placeholder="Введите слово, например: Понятно">
+    </div>
+    <div class="quick-words">
+      <button class="word-pill" onclick="setWord('Понятно')">Понятно</button>
+      <button class="word-pill" onclick="setWord('Хорошо')">Хорошо</button>
+      <button class="word-pill" onclick="setWord('Ладно')">Ладно</button>
+      <button class="word-pill" onclick="setWord('Спасибо')">Спасибо</button>
+      <button class="word-pill" onclick="setWord('Нормально')">Нормально</button>
+      <button class="word-pill" onclick="setWord('Ок')">Ок</button>
+    </div>
+
+    <div class="section-title">Шаг 2. Выберите оформление и пунктуацию:</div>
+    <div class="punct-grid" id="punctButtons"></div>
+  </div>
+
+  <div class="card">
+    <div class="message-bubble-wrap">
+      <div class="bubble-label">Как выглядит сообщение в чате:</div>
+      <div class="message-bubble" id="renderedMessage">Понятно.</div>
+      <div class="punct-badge" id="punctRuleTitle">Оформление: Заглавная буква + точка в конце</div>
+    </div>
+
+    <div class="comparison">
+      <div class="role-box role-adult">
+        <div class="role-header">🧑‍💼 Восприятие взрослых</div>
+        <div class="tag tag-adult" id="adultTag">Нейтрально / Вежливо</div>
+        <p id="adultDesc"></p>
+      </div>
+
+      <div class="role-box role-teen">
+        <div class="role-header">🎧 Восприятие подростков</div>
+        <div class="tag tag-teen" id="teenTag">Холод / Обида / Агрессия</div>
+        <p id="teenDesc"></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-title">Памятка: как работает цифровая пунктуация</div>
+    <table class="guide-table">
+      <thead>
+        <tr>
+          <th>Знак / Приём</th>
+          <th>Для взрослых</th>
+          <th>Для подростков</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Точка (.)</strong></td>
+          <td>Нормальное завершение мысли по правилам грамматики.</td>
+          <td>Сигнал раздражения, строгости, закрытия темы («разговор окончен»).</td>
+        </tr>
+        <tr>
+          <td><strong>Без знаков (слово)</strong></td>
+          <td>Небрежность или спешка при наборе текста.</td>
+          <td>Самый спокойный, нейтральный и дружелюбный тон.</td>
+        </tr>
+        <tr>
+          <td><strong>Многоточие (...)</strong></td>
+          <td>Задумчивость, пауза, незавершённая мысль.</td>
+          <td>Пассивная обида, драматизация, тяжёлый вздох или намёк.</td>
+        </tr>
+        <tr>
+          <td><strong>Скобки ))</strong></td>
+          <td>Непонятные лишние символы или опечатка.</td>
+          <td>Замена улыбки, тёплый и мягкий тон, снятие напряжения.</td>
+        </tr>
+        <tr>
+          <td><strong>КАПС (СЛОВО)</strong></td>
+          <td>Крик, грубость, повышение голоса.</td>
+          <td>Сильный восторг, шок, смех или бурная эмоция.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
 
-<section id="about">
-  <h2>О проекте</h2>
-  <p class="description">
-    В современном мире интернет-коммуникация стала одной
-    из основных форм общения. Люди ежедневно обмениваются
-    сообщениями в социальных сетях и мессенджерах.
-    При этом значение имеют не только слова, но и знаки
-    препинания, регистр букв, повторы и эмодзи.
-    Данное исследование посвящено изучению того,
-    как графическое оформление меняет эмоциональное
-    восприятие одного и того же сообщения.
-  </p>
-</section>
-
-<section id="research">
-  <h2>Что влияет на восприятие?</h2>
-  <p class="description">
-    Даже небольшие изменения в оформлении текста
-    способны повлиять на то, как читатель понимает
-    настроение и отношение автора.
-  </p>
-
-  <div class="cards">
-    <div class="card">
-      <h3>01. Пунктуация</h3>
-      <p>Точка, многоточие и восклицательный знак могут придавать фразе разные эмоциональные оттенки.</p>
-    </div>
-
-    <div class="card">
-      <h3>02. Регистр букв</h3>
-      <p>ЗАГЛАВНЫЕ БУКВЫ помогают выделить информацию и усилить выразительность сообщения.</p>
-    </div>
-
-    <div class="card">
-      <h3>03. Повторы</h3>
-      <p>Повторение букв и знаков препинания может усиливать эмоциональную окраску.</p>
-    </div>
-
-    <div class="card">
-      <h3>04. Эмодзи</h3>
-      <p>Графические символы дополняют текст и помогают передавать настроение.</p>
-    </div>
-  </div>
-</section>
-
-<section id="experiment">
-  <h2>Интерактивный эксперимент</h2>
-  <p class="description">
-    Прочитай сообщение и выбери, какое впечатление
-    оно производит на тебя. Здесь нет правильных
-    или неправильных ответов.
-  </p>
-
-  <div class="experiment">
-    <p>Как ты воспринимаешь это сообщение?</p>
-
-    <div class="message" id="example">Хорошо.</div>
-
-    <button onclick="choose('Доброжелательно')">
-      Доброжелательно
-    </button>
-
-    <button onclick="choose('Нейтрально')">
-      Нейтрально
-    </button>
-
-    <button onclick="choose('Холодно или недовольно')">
-      Холодно / недовольно
-    </button>
-
-    <p id="result"></p>
-
-    <button onclick="nextMessage()">
-      Следующее сообщение →
-    </button>
-
-    <p class="note" id="counter">Сообщение 1 из 5</p>
-  </div>
-</section>
-
-<section>
-  <h2>Почему это важно?</h2>
-  <p class="description">
-    Исследование помогает понять особенности цифрового
-    общения и причины возникновения недопонимания
-    между собеседниками. Результаты могут показать,
-    насколько сильно оформление текста влияет
-    на интерпретацию эмоций представителями разных
-    возрастных групп.
-  </p>
-</section>
-
 <footer>
-  <h3>ONE MESSAGE — SEVERAL MEANINGS</h3>
-  <p>Исследовательский образовательный проект</p>
-  <p>2026</p>
+  Образовательный проект: влияние пунктуации и графического оформления на восприятие эмоций
 </footer>
 
 <script>
-const messages = [
-  "Хорошо.",
-  "Хорошо!",
-  "ХОРОШО!!!",
-  "Хорошо...",
-  "Хорошо 😊"
-];
+  const styles = [
+    {
+      id: "dot",
+      label: "С точкой (.)",
+      hint: "Классика",
+      format: (w) => capitalize(w) + ".",
+      rule: "Заглавная буква + точка в конце",
+      adultTag: "Грамотно / Спокойно",
+      adult: "Обычный вежливый ответ. Точка ставится автоматически или по правилам русского языка и просто показывает, что фраза закончена.",
+      teenTag: "Холод / Пассивная агрессия",
+      teen: "Точка в конце короткого слова воспринимается как резкость, обида или раздражение. Ощущается как «всё, отстань, я злюсь»."
+    },
+    {
+      id: "none",
+      label: "Без знаков",
+      hint: "С маленькой буквы",
+      format: (w) => w.toLowerCase(),
+      rule: "Строчная буква + отсутствие точки",
+      adultTag: "Немного небрежно",
+      adult: "Кажется, что собеседник торопится или ленится соблюдать правила оформления предложения.",
+      teenTag: "Спокойно / Дружелюбно",
+      teen: "Базовый нейтральный тон в мессенджерах. Отсутствие точки убирает строгость и показывает, что всё в порядке."
+    },
+    {
+      id: "dots",
+      label: "Многоточие (...)",
+      hint: "Три точки",
+      format: (w) => w.toLowerCase() + "...",
+      rule: "Многоточие в конце слова",
+      adultTag: "Раздумье / Пауза",
+      adult: "Воспринимается как неуверенность, задумчивость или лёгкая усталость, но без скрытого конфликта.",
+      teenTag: "Обида / Драма / Упрёк",
+      teen: "Читается как тяжёлый вздох, разочарование или скрытая претензия («ну-ну, я запомнил»)."
+    },
+    {
+      id: "excl",
+      label: "Восклицание (!)",
+      hint: "Один знак",
+      format: (w) => capitalize(w) + "!",
+      rule: "Восклицательный знак в конце",
+      adultTag: "Бодро / Приветливо",
+      adult: "Показывает энергичное согласие, радость или готовность действовать.",
+      teenTag: "Слишком громко / Напряжённо",
+      teen: "В обычной переписке одиночный восклицательный знак может показаться чрезмерно официальным или даже резким."
+    },
+    {
+      id: "brackets",
+      label: "Со скобками ))",
+      hint: "Улыбка",
+      format: (w) => w.toLowerCase() + "))",
+      rule: "Смайл-скобки без двоеточия",
 
-let current = 0;
-
-function choose(answer) {
-  document.getElementById("result").textContent =
-    "Твой ответ: " + answer +
-    ". Спасибо за участие в эксперименте!";
-}
-
-function nextMessage() {
-  current = (current + 1) % messages.length;
-
-  document.getElementById("example").textContent =
-    messages[current];
-
-  document.getElementById("result").textContent = "";
-
-  document.getElementById("counter").textContent =
-    "Сообщение " + (current + 1) + " из " + messages.length;
-}
-</script>
-
-</body>
-</html>
