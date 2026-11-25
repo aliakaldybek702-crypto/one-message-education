@@ -607,5 +607,50 @@ function analyzeText() {
 
 analyzeText();
 </script>
+<script>
+function analyzeSingleMessage() {
+  // Находим поле ввода и кнопку в первом блоке (проверьте ваши id в HTML)
+  const input = document.querySelector('input[type="text"], textarea');
+  const text = input ? input.value.trim() : "";
+  if (!text) return alert("Введите сообщение для анализа!");
+
+  const hasDot = text.endsWith(".");
+  const isCaps = /[А-ЯЁA-Z]/.test(text) && text === text.toUpperCase();
+  const hasExcl = text.includes("!");
+  const hasEllipsis = text.includes("...");
+
+  let teenView = "Нейтральное, обычное сообщение без скрытого подтекста.";
+  let adultView = "Спокойный, стандартный ответ по делу.";
+
+  if (hasDot && text.split(" ").length <= 2) {
+    teenView = "Пассивная агрессия, обида, холодность или нежелание продолжать диалог.";
+    adultView = "Грамотно оформленная, законченная мысль. Никакого негатива.";
+  } else if (isCaps) {
+    teenView = "Крик, сильная злость или бурное возмущение.";
+    adultView = "Повышенная эмоциональность или случайно нажатый Caps Lock.";
+  } else if (hasEllipsis) {
+    teenView = "Недосказанность, грусть, сомнение или намёк на проблему.";
+    adultView = "Пауза для размышлений или мягкий переход к другой теме.";
+  } else if (hasExcl) {
+    teenView = "Сильный восторг, радость или резкое требование.";
+    adultView = "Вежливое приветствие, доброжелательность или важный акцент.";
+  }
+
+  // Подставляем результат в блок 02 (убедитесь, что у абзацев есть соответствующие классы или id)
+  const paragraphs = document.querySelectorAll("p");
+  paragraphs.forEach(p => {
+    if (p.textContent.includes("Здесь появится анализ после ввода сообщения")) {
+      p.textContent = p.previousElementSibling?.textContent.includes("Подростки") ? teenView : adultView;
+    }
+  });
+}
+
+// Привязываем функцию к кнопке «Анализировать»
+document.querySelectorAll("button").forEach(btn => {
+  if (btn.textContent.trim() === "Анализировать") {
+    btn.addEventListener("click", analyzeSingleMessage);
+  }
+});
+</script>
 </body>
 </html>
