@@ -555,24 +555,6 @@ function analyzeText() {
   document.getElementById("adultResult").textContent = adultText;
   document.getElementById("teenBadge").textContent = teenTag;
   document.getElementById("teenResult").textContent = teenText;
-}
-
-// СРАВНЕНИЕ ДВУХ СООБЩЕНИЙ
-
-function compareMessages() {
-  const a = document.getElementById("compareA");
-  const b = document.getElementById("compareB");
-  const output = document.getElementById("compareResult");
-
-  if (!a || !b || !output) return;
-
-  const firstText = a.value.trim();
-  const secondText = b.value.trim();
-
-  if (!firstText || !secondText) {
-    output.textContent = "Введите оба сообщения для сравнения.";
-    output.classList.remove("hidden");
-    return;
   }
 
   const differences = [];
