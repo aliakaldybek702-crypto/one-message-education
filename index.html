@@ -264,6 +264,10 @@
 </footer>
 
 <script>
+        return;
+    }
+
+    bubble.textContent = text;<script>
   const examples = [
     "Чтооооо", "поч", "Понятно.", "понятно", "ок.", "пон", "хз",
     "ладно...", "норм))", "ЧТО?!", "ахахаха", "спс", "ясно.", "неа", "жиза"
@@ -350,37 +354,275 @@
     }
 
     bubble.textContent = text;
-    const cleanLower = text.toLowerCase().replace(/[.!?,)()/]+$/g, "");
-    const features = [];
+    
+</script>
 
-    const hasStretched = /([а-яёa-z])\1{2,}/i.test(text);
-    const hasDotEnd = text.endsWith(".") && !text.endsWith("..");
-    const hasDots = text.endsWith("..");
-    const hasBrackets = /\)+$/.test(text);
-    const hasSadBrackets = /\(+$/.test(text);
-    const hasCaps = text === text.toUpperCase() && /[А-ЯЁA-Z]/.test(text) && text.length > 1;
-    const hasExcl = text.includes("!");
-    const hasQues = text.includes("?");
-    const isShortNoPunct = text === text.toLowerCase() && !/[.!?,)]$/.test(text);
+<script>
+const examples = [
+  "Чтооооо", "поч", "Понятно.", "понятно", "ок.",
+  "пон", "хз", "ладно...", "норм))", "ЧТО?!",
+  "ахахаха", "спс", "ясно.", "неа", "жиза"
+];
 
-    if (hasStretched) features.push("Растянутые буквы (интонация)");
-    if (hasDotEnd) features.push("Точка в конце");
-    if (hasDots) features.push("Многоточие");
-    if (hasBrackets) features.push("Улыбка-скобки ))");
-   teenText = "Передаёт бурную реакцию на неожиданную новость («как так вышло?!»).";
-} else if (isShortNoPunct) {
-adultTag = "Немного небрежно";
-adultText = "Отсутствие заглавной буквы и точки может показаться спешкой или неаккуратностью.";
-teenTag = "Спокойно и по-дружески";
-teenText = "Самый комфортный и расслабленный тон в мессенджерах: без претензий и лишнего официоза.";
+const dictionary = {
+  "поч": {
+    feature: "Сокращение слова «почему»",
+    adultTag: "Непонятное сокращение",
+    adult: "Взрослый может не понять значение слова без дополнительного контекста.",
+    teenTag: "Быстрый вопрос",
+    teen: "Часто используется подростками как короткий вариант слова «почему»."
+  },
+  "пон": {
+    feature: "Сокращение слова «понятно»",
+    adultTag: "Небрежный ответ",
+    adult: "Может восприниматься как слишком короткий ответ.",
+    teenTag: "Краткое подтверждение",
+    teen: "В неформальной переписке обычно означает «понятно»."
+  },
+  "хз": {
+    feature: "Сленговое сокращение",
+    adultTag: "Грубоватое выражение",
+    adult: "Может восприниматься как неформальный или грубоватый ответ.",
+    teenTag: "Привычный сленг",
+    teen: "Часто используется в значении «не знаю»."
+  },
+  "спс": {
+    feature: "Сокращение слова «спасибо»",
+    adultTag: "Сухая благодарность",
+    adult: "Может показаться недостаточно выразительным ответом.",
+    teenTag: "Быстрая благодарность",
+    teen: "Привычное дружеское сокращение."
+  },
+  "жиза": {
+    feature: "Молодёжный сленг",
+    adultTag: "Незнакомое слово",
+    adult: "Без знания современного сленга значение может быть непонятно.",
+    teenTag: "Согласие и понимание",
+    teen: "Выражает согласие: «у меня точно так же»."
+  },
+  "ок": {
+    feature: "Краткое согласие",
+    adultTag: "Подтверждение",
+    adult: "Может восприниматься как обычное согласие.",
+    teenTag: "Сухой ответ",
+    teen: "Без дополнительных знаков иногда звучит холодно."
+  },
+  "ясно": {
+    feature: "Краткий ответ",
+    adultTag: "Понимание",
+    adult: "Может означать, что информация принята.",
+    teenTag: "Возможное недовольство",
+    teen: "В определённом контексте может восприниматься как обида."
+  }
+};
+
+const chipsWrap = document.getElementById("presetChips");
+
+examples.forEach(word => {
+  const btn = document.createElement("button");
+  btn.className = "chip";
+  btn.textContent = word;
+  btn.onclick = () => {
+    document.getElementById("msgInput").value = word;
+    analyzeText();
+  };
+  chipsWrap.appendChild(btn);
+});
+
+function analyzeText() {
+  const text = document.getElementById("msgInput").value.trim();
+
+  const bubble = document.getElementById("bubbleText");
+  const featuresBox = document.getElementById("featuresList");
+
+  let adultTag = "Нейтральное сообщение";
+  let adultText = "Восприятие зависит от контекста и отношений между собеседниками.";
+  let teenTag = "Нейтральное сообщение";
+  let teenText = "Сообщение может восприниматься спокойно, в зависимости от ситуации.";
+
+  if (!text) {
+    bubble.textContent = "...";
+    featuresBox.innerHTML = "";
+    document.getElementById("adultBadge").textContent = "Ожидание ввода";
+    document.getElementById("adultResult").textContent = "Введите сообщение для анализа.";
+    document.getElementById("teenBadge").textContent = "Ожидание ввода";
+    document.getElementById("teenResult").textContent = "Введите сообщение для анализа.";
+    return;
+  }
+
+  bubble.textContent = text;
+
+  const clean = text.toLowerCase().replace(/[.!?,)()/]+$/g, "");
+  const features = [];
+
+  const hasStretched = /([а-яёa-z])\1{2,}/i.test(text);
+  const hasDot = text.endsWith(".") && !text.endsWith("..");
+  const hasDots = text.endsWith("..");
+  const hasBrackets = /\)+$/.test(text);
+  const hasSadBrackets = /\(+$/.test(text);
+  const hasCaps = text === text.toUpperCase() &&
+    /[А-ЯЁA-Z]/.test(text) && text.length > 1;
+  const hasExcl = text.includes("!");
+  const hasQues = text.includes("?");
+  const hasEmoji = /[\u{1F300}-\u{1FAFF}]/u.test(text);
+
+  if (hasStretched) features.push("Растянутые буквы");
+  if (hasDot) features.push("Точка в конце");
+  if (hasDots) features.push("Многоточие");
+  if (hasBrackets) features.push("Улыбка-скобки ))");
+  if (hasSadBrackets) features.push("Грустные скобки");
+  if (hasCaps) features.push("Заглавные буквы");
+  if (hasExcl) features.push("Восклицательный знак");
+  if (hasQues) features.push("Вопросительный знак");
+  if (hasEmoji) features.push("Эмодзи");
+
+  const known = dictionary[clean];
+
+  if (known) {
+    adultTag = known.adultTag;
+    adultText = known.adult;
+    teenTag = known.teenTag;
+    teenText = known.teen;
+  }
+
+  if (hasStretched) {
+    adultTag = "Необычное написание";
+    adultText = "Растянутые буквы могут показаться ошибкой или намеренным эмоциональным выделением.";
+    teenTag = "Эмоциональное удивление";
+    teenText = "Повторение букв часто передаёт интонацию, удивление или сильную реакцию.";
+  }
+
+  if (hasDot) {
+    adultTag = "Обычная пунктуация";
+    adultText = "Точка соответствует стандартной письменной норме.";
+    teenTag = "Возможная холодность";
+    teenText = "В короткой переписке точка иногда воспринимается как сухой или серьёзный тон.";
+  }
+
+  if (hasDots) {
+    adultTag = "Незавершённость мысли";
+    adultText = "Многоточие может передавать паузу или незавершённость.";
+    teenTag = "Неуверенность или обида";
+    teenText = "Многоточие может создавать впечатление недосказанности или напряжения.";
+  }
+
+  if (hasBrackets) {
+    adultTag = "Дружелюбный тон";
+    adultText = "Скобки могут восприниматься как дополнительный знак улыбки.";
+    teenTag = "Дружелюбие";
+    teenText = "Скобки часто смягчают сообщение и передают позитивную интонацию.";
+  }
+
+  if (hasCaps) {
+    adultTag = "Акцентирование";
+    adultText = "Заглавные буквы могут подчёркивать важность сообщения.";
+    teenTag = "Сильная эмоция";
+    teenText = "Написание заглавными буквами часто воспринимается как крик или сильное удивление.";
+  }
+
+  if (hasExcl) {
+    adultTag = "Эмоциональная выразительность";
+    adultText = "Восклицательный знак подчёркивает интонацию и эмоциональную окраску.";
+    teenTag = "Активная реакция";
+    teenText = "Может передавать радость, удивление или эмоциональное возбуждение.";
+  }
+
+  if (hasQues) {
+    adultTag = "Вопросительная интонация";
+    adultText = "Знак вопроса указывает на вопрос или уточнение.";
+    teenTag = "Удивление или интерес";
+    teenText = "В зависимости от контекста может выражать не только вопрос, но и удивление.";
+  }
+
+  if (hasEmoji) {
+    features.push("Графическое выражение эмоции");
+  }
+
+  if (features.length === 0) {
+    features.push("Стандартное оформление");
+  }
+
+  featuresBox.innerHTML = "";
+
+  features.forEach(feature => {
+    const span = document.createElement("span");
+    span.className = "feature-pill";
+    span.textContent = feature;
+    featuresBox.appendChild(span);
+  });
+
+  document.getElementById("adultBadge").textContent = adultTag;
+  document.getElementById("adultResult").textContent = adultText;
+  document.getElementById("teenBadge").textContent = teenTag;
+  document.getElementById("teenResult").textContent = teenText;
 }
-if (features.length === 0) features.push("Стандартное оформление");
-featuresBox.innerHTML = features.map(f => <span class="feature-pill">${f}</span>).join("");
-document.getElementById("adultBadge").textContent = adultTag;
-document.getElementById("adultResult").textContent = adultText;
-document.getElementById("teenBadge").textContent = teenTag;
-document.getElementById("teenResult").textContent = teenText;
+
+// СРАВНЕНИЕ ДВУХ СООБЩЕНИЙ
+
+function compareMessages() {
+  const a = document.getElementById("compareA");
+  const b = document.getElementById("compareB");
+  const output = document.getElementById("compareResult");
+
+  if (!a || !b || !output) return;
+
+  const firstText = a.value.trim();
+  const secondText = b.value.trim();
+
+  if (!firstText || !secondText) {
+    output.textContent = "Введите оба сообщения для сравнения.";
+    output.classList.remove("hidden");
+    return;
+  }
+
+  const differences = [];
+
+  if (firstText === secondText) {
+    differences.push("Сообщения полностью совпадают.");
+  } else {
+    const firstPunctuation = firstText.match(/[.,!?;:…—–]/g) || [];
+    const secondPunctuation = secondText.match(/[.,!?;:…—–]/g) || [];
+
+    const firstEmoji = firstText.match(/[\u{1F300}-\u{1FAFF}]/gu) || [];
+    const secondEmoji = secondText.match(/[\u{1F300}-\u{1FAFF}]/gu) || [];
+
+    if (firstPunctuation.join("") !== secondPunctuation.join("")) {
+      differences.push("Пунктуация различается и может менять интонацию сообщения.");
+    }
+
+    if (firstEmoji.join("") !== secondEmoji.join("")) {
+      differences.push("Эмодзи различаются и могут влиять на эмоциональное восприятие.");
+    }
+
+    if (firstText === firstText.toUpperCase() &&
+        secondText !== secondText.toUpperCase()) {
+      differences.push("В первом сообщении используются заглавные буквы.");
+    } else if (firstText !== firstText.toUpperCase() &&
+               secondText === secondText.toUpperCase()) {
+      differences.push("Во втором сообщении используются заглавные буквы.");
+    }
+
+    if (/([!?.,…])\1+/u.test(firstText) !==
+        /([!?.,…])\1+/u.test(secondText)) {
+      differences.push("Изменилось повторение знаков препинания.");
+    }
+
+    if (firstText.length !== secondText.length) {
+      differences.push(
+        "Длина сообщений различается: " +
+        firstText.length + " и " + secondText.length + " символов."
+      );
+    }
+
+    if (differences.length === 0) {
+      differences.push("Графические признаки похожи. Возможно, различие заключается в словах или контексте.");
+    }
+  }
+
+  output.textContent = differences.join(" ");
+  output.classList.remove("hidden");
 }
+
 analyzeText();
 </script>
 </body>
